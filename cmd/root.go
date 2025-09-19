@@ -40,6 +40,7 @@ func NewModuleConfig() *ModuleConfig {
 			"members": "Members Module API",
 			"brands":  "Brands Module API",
 			"classes": "Classes Module API",
+			"vivapay": "Payments Module API",
 		},
 	}
 }
