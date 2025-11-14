@@ -37,10 +37,11 @@ type ModuleConfig struct {
 func NewModuleConfig() *ModuleConfig {
 	return &ModuleConfig{
 		Modules: map[string]string{
-			"members": "Members Module API",
-			"brands":  "Brands Module API",
-			"classes": "Classes Module API",
-			"vivapay": "Payments Module API",
+			"Customers": "Customers Module API",
+			"Brands":    "Brands Module API",
+			"Classes":   "Classes Module API",
+			"Vivapay":   "Payments Module API",
+			"Home":      "Home Module API",
 		},
 	}
 }
@@ -191,6 +192,7 @@ func (c *APIClient) deleteCollection(collectionID string) error {
 }
 
 func (c *APIClient) importToPostman(openAPIData, collectionName, workspaceID string) error {
+	fmt.Println("Start to import collection: ", collectionName)
 	payload := map[string]any{
 		"type":  "string",
 		"input": openAPIData,
@@ -228,7 +230,10 @@ func (c *APIClient) importToPostman(openAPIData, collectionName, workspaceID str
 func (c *APIClient) ProcessModule(moduleName, collectionName, workspaceID string) error {
 	fmt.Println("processing module", moduleName)
 
-	apiURL := fmt.Sprintf("https://api.%s.vivalabs-dev.link/v1/internal-docs", moduleName)
+	apiURL := "https://api.vivalabs-dev.link/v1/internal-docs"
+	if moduleName != "Home" {
+		apiURL = fmt.Sprintf("https://api.%s.vivalabs-dev.link/v1/internal-docs", moduleName)
+	}
 
 	data, err := c.fetchDoc(apiURL)
 	if err != nil {
